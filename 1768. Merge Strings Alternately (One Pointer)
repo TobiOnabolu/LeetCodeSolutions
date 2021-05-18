@@ -1,0 +1,23 @@
+class Solution {
+    public String mergeAlternately(String word1, String word2) {
+        String merge = new String("");
+        int index = 0; 
+        
+        //Could have used stringbuilder to make it easier to append characters
+        
+        
+        while (index < word1.length() || index < word2.length()){
+            if (index < word1.length()){
+                merge = merge.concat(String.valueOf(word1.charAt(index)));
+               
+                
+            }
+            if (index < word2.length()){
+                merge = merge.concat(String.valueOf(word2.charAt(index)));
+            }
+            index += 1;
+        }
+        
+        return merge;
+    }
+}
