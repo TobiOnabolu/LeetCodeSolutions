@@ -1,0 +1,48 @@
+class Solution {
+    public int islandPerimeter(int[][] grid) {
+
+        int count = 0;
+        
+        if (grid.length == 0){
+            return count;
+        }
+        
+        
+        //loop thru array
+        for (int i = 0; i < grid.length; i++){
+            for (int j = 0; j < grid[0].length; j++){
+                if (grid[i][j] == 1){
+                    count = countNeighbours(i, j, grid);
+                }
+            }
+        }
+        return count;
+    }
+    
+    private int countNeighbours(int i, int j, int[][] grid){
+        //took care of out of bound cases and lake cases
+        //if we see a lake we add 1 to perimeter
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0){
+            return 1;
+        }
+        if (grid[i][j] == -1){
+            return 0;
+        }
+        
+        //we found an island 
+        //change it to -1 so we know that its not a lake, just something we dont want to count 
+        grid[i][j] = -1;
+        //we set count = 0 because thats the count for each block before we check its neighbours
+        int count = 0; 
+        
+        //dfs search all n spaces, retreiving the count of each node, these four line return the count of node to a link that called it
+        count += countNeighbours(i + 1, j, grid);
+        count += countNeighbours(i, j + 1, grid);
+        count += countNeighbours(i, j - 1, grid);
+        count += countNeighbours(i - 1, j, grid);
+        
+        return count;
+        
+    }
+    
+}
