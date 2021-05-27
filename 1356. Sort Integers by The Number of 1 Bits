@@ -1,0 +1,7 @@
+class Solution {
+    public int[] sortByBits(int[] arr) {
+        ArrayList<int> sort = new ArrayList<int>();
+        
+        
+    }
+}
