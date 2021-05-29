@@ -1,0 +1,65 @@
+class Solution {
+    public int numRookCaptures(char[][] board) {
+        int captures = 0;
+        
+        for (int i = 0; i < board.length; i++){
+            for (int j = 0; j < board[0].length; j++){
+                if (board[i][j] == 'R'){
+                    captures = checkLeft(board, i, j) + checkRight(board, i, j) + checkUp(board, i, j) + checkDown(board, i, j);
+                    return captures;
+                }
+            }
+        }
+        
+        return captures;
+    }
+    
+    public int checkUp(char[][] board, int i, int j){
+        //so we dont check rook spot
+        i -= 1;
+        while (i >= 0 && board[i][j] != 'B'){
+            if(board[i][j] == 'p'){
+                return 1;   //found pawn
+            }
+            i -= 1;
+        }
+        return 0;   //didnt find pawn
+    }
+    
+    public int checkRight(char[][] board, int i, int j){
+        //so we dont check rook spot
+        j += 1;
+        while (j < board[0].length && board[i][j] != 'B'){
+            if(board[i][j] == 'p'){
+                return 1;   //found pawn
+            }
+            j += 1;
+        }
+        return 0;   //didnt find pawn
+    }
+    
+    public int checkDown(char[][] board, int i, int j){
+        //so we dont check rook spot
+        i += 1;
+        while (i < board.length && board[i][j] != 'B'){
+            if(board[i][j] == 'p'){
+                return 1;   //found pawn
+            }
+            i += 1;
+        }
+        return 0;   //didnt find pawn
+    }
+    
+    public int checkLeft(char[][] board, int i, int j){
+        //so we dont check rook spot
+        j -= 1;
+        while (j >= 0 && board[i][j] != 'B'){
+            if(board[i][j] == 'p'){
+                return 1;   //found pawn
+            }
+            j -= 1;
+        }
+        return 0;   //didnt find pawn
+    }
+    
+}
