@@ -1,0 +1,24 @@
+class Solution {
+    public int largestAltitude(int[] gain) {
+        //find the first highest differenc between points
+        //since we start at 0 this the highest
+        int highest = 0;
+        int curr_alt = 0;
+
+        
+        //iterate thru array assigning new highest
+        for (int i = 0; i < gain.length; i++){
+            curr_alt += gain[i]; 
+            
+            //compare curr_alt to see if we have new highest
+            if (curr_alt > highest){
+                highest = curr_alt;
+            }
+        }
+        
+        
+        
+        return highest;
+        
+    }
+}
