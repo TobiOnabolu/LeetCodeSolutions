@@ -1,0 +1,73 @@
+class Solution {
+    public boolean isValid(String s) {
+        char[] cString = s.toCharArray();
+        //hmap with left parn as key and right parn as value
+        HashMap <Character, Character> map = new HashMap <Character, Character>();
+        Stack <Character> stack = new Stack <Character>();
+        int i = 0;
+        
+        map.put('(', ')');
+        map.put('{', '}');
+        map.put('[', ']');
+         
+        
+        //cant be odd number
+        if (s.length() % 2 != 0){
+            return false;
+        }
+        
+        
+        //check if first char is key
+        if (map.get(cString[i]) != null){
+            //push first char onto stack
+            stack.push(cString[i]);
+            //increment i
+            i++;
+        }
+        else{
+            return false;
+        }
+            
+            
+        //i < length of string
+        while (i < cString.length){   
+        
+            //if left parn push on stack (map.get != null)
+            if (map.get(cString[i]) != null){
+                stack.push(cString[i]);
+            }
+            //else then its right parn and we need to pop
+            else{
+                if (!stack.empty()){
+                    //pop off stack to left parn var
+                    char left = stack.pop();
+                    char right = cString[i];
+
+                    //check if map.get(left parn) != right parn
+                    if (map.get(left) != right){
+                        return false;
+                    }
+                }
+                else{
+                    return false;
+                }
+            }
+            //incremnet i
+            i++;
+        }
+        
+        //if stack is not empty return false cause we didnt have enough end brackets        
+        if (!stack.empty()){
+            return false;
+        }
+        
+        //if stack is empty, but i < length of string return false cause we didnt have enough beginning brackets
+        if (i < cString.length){
+            return false;
+        }
+        
+        //return true
+        return true;    
+    
+    }
+}
