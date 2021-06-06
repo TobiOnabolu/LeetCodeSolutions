@@ -1,0 +1,51 @@
+class Solution {
+    public int reverse(int x) {
+        boolean negative = false;
+        int result = 0;
+        int result_copy = 0;
+        int multiplier = 10;
+
+        
+
+
+        
+        //if negative take off
+        if(x < 0){
+            //turn negative check on
+            //make postive
+            negative = true;
+            x *= -1;
+        }    
+        
+        
+        //while loop till x == 0
+        while (x > 0){
+            //pop off last digit and store it in last
+            int last = x % 10;
+            x = x / 10;
+            
+            result_copy = result;
+            //use multiplier on result 
+            result = result * multiplier;
+            if (result / multiplier != result_copy){
+                return 0;
+            }
+            
+            //add last to result
+            result += last;
+
+            System.out.println(result);
+
+        }
+        if (negative){
+            result *= -1;
+        }
+
+        return result;
+    
+    }
+}
+
+//once you get popping and pushing off you need to remember to check for overflow
+//I did this by keeping a prev copy before the operation that might cause the overflow, I then checked if i did the reverse of the op i will get the same number
+//this is a way to workaround overflows
