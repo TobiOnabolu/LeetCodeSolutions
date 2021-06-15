@@ -1,0 +1,30 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        //if running sum is positive no harm adding to it
+        //if running sum is negative and next one is positive thats when we change because running sum was now holding us back
+        
+        int running_sum = nums[0];
+        int max_sum = nums[0];
+        
+        //for loop
+        for (int i = 1; i < nums.length; i++){                        
+            //if running sum is -ve
+            if (running_sum < 0){
+                //running sum = nums[i]
+                running_sum = nums[i];    
+            }
+            else{
+                //add spots[i] to running sum
+                running_sum += nums[i];                
+            }
+            
+        
+            //get max of running sum and store in max
+            max_sum = Math.max(running_sum, max_sum);
+            
+        }
+        
+        return max_sum;
+            
+    }
+}
