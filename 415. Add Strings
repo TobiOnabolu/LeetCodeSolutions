@@ -1,0 +1,88 @@
+class Solution {
+    public String addStrings(String num1, String num2) {
+        StringBuilder res = new StringBuilder();
+        // 2 ptrs // initiate ptrs to end of both strings
+        int ptr1 = num1.length() - 1;
+        int ptr2 = num2.length() - 1;
+        int carry = 0;
+        Integer sum = 0;
+        
+        
+        
+        
+        
+        
+        //while loop to run until either one ends
+        while (ptr1 > -1 && ptr2  > -1){
+            //assign char from ptr1 and ptr2
+            char digit1 = num1.charAt(ptr1);
+            char digit2 = num2.charAt(ptr2);
+            
+            //parse char+"" to get integer
+            //add them together  + carry and store in sum
+            sum = Integer.parseInt(""+digit1) + Integer.parseInt(""+digit2) + carry;
+            //set carry back to 0
+            carry = 0;
+
+            //if sum > 9
+            if (sum > 9){
+                //store carry w/ / 10
+                // get sum by % 10 and store in sum
+                carry = sum / 10;
+                sum = sum % 10;
+            }
+
+        
+            //add sum.tostring to result using insert at 0
+            //decrement ptr1 and ptr2
+            
+            res.insert(0, sum.toString());
+            ptr1--;
+            ptr2--;
+        
+        }
+        
+        
+        //check if ptr 2 does not = -1
+        while (ptr1 > -1){
+            //while loop to add remains
+            char digit1 = num1.charAt(ptr1);
+            sum = Integer.parseInt(""+digit1) + carry;
+            carry = 0;
+            
+            if (sum > 9){
+                carry = sum / 10;
+                sum = sum % 10;
+            }
+            
+            res.insert(0, sum.toString());
+            ptr1--;
+
+        }
+        
+        while (ptr2 > -1){
+            //while loop to add remains
+            char digit2 = num2.charAt(ptr2);
+            sum = Integer.parseInt(""+digit2) + carry;
+            carry = 0;
+            
+            if (sum > 9){
+                carry = sum / 10;
+                sum = sum % 10;
+            }
+            
+            res.insert(0, sum.toString());
+            ptr2--;
+        }
+        
+        //if carry > 0
+        if (carry > 0){
+            sum = carry;
+            res.insert(0, sum.toString());
+        }
+
+        
+        //return .tostring
+        return res.toString();
+    }
+}
