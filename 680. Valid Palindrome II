@@ -1,0 +1,44 @@
+class Solution {
+    public boolean validPalindrome(String s) {
+        s = s.replaceAll(" ", "");
+        char[] c = s.toCharArray();
+        boolean valid = true;
+        int start = 0;
+        int end = c.length - 1;
+        
+        if(s.length() < 2){
+            return true;
+        }
+        
+        
+        
+        //while start < end
+        while (start < end){
+            
+            //if start == end increase start decrease end
+            if (c[start] != c[end]){
+                //send to helper with 2 versions
+                return isPalindrome(c, start, end - 1) || isPalindrome(c, start + 1, end);
+            }
+            start++;
+            end--;
+
+        }
+        
+        return true;
+
+    }
+    
+    
+    private boolean isPalindrome(char[] c, int start, int end){
+        while (start < end){
+            if (c[start] != c[end]){
+                return false;
+            }
+            start++;
+            end--;
+        }
+        
+        return true;
+    }
+}
