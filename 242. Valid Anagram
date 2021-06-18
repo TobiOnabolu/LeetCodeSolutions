@@ -1,0 +1,40 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        char[] alphabet = new char[]{'a','b', 'c', 'd', 'e', 'f', 'g', 'h',
+                                    'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+                                    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 
+                                    'y', 'z'};
+        
+        HashMap<Character, Integer> alpha = new HashMap();
+        
+    
+        
+        if (s.length() != t.length()){
+            return false;
+        }
+        
+        //load hashmap
+        for (Character c : alphabet){
+            alpha.put(c, 0);
+        }
+        
+        //for loop to run through both words
+        for (int i = 0; i < s.length(); i++){
+            //when you see char in s increment hashmap
+            alpha.put(s.charAt(i), alpha.get(s.charAt(i)) + 1);
+            //when you see char in t decrement hashmap
+            alpha.put(t.charAt(i), alpha.get(t.charAt(i)) - 1);
+        }
+    
+            
+        
+        //run through hash map at end if any value != 0 then return false
+        for(Map.Entry<Character, Integer> set : alpha.entrySet()){
+            if (set.getValue() != 0){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
