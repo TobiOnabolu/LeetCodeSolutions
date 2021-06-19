@@ -1,0 +1,53 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        //since were using 2 vars to keep track need to make sure at least 2 in list
+        if (head == null || head.next == null){
+            return head;
+        }
+        
+        return reverseHelper(head, head.next);
+        
+
+    }
+    
+    private ListNode reverseHelper(ListNode prev, ListNode curr){
+        //go down until you reach end
+        if (curr == null){
+            //get the last node in list
+            return prev;
+        }
+        //get last node and make it the front
+        ListNode front = reverseHelper(prev.next, curr.next);
+        //do the base reversal, make sure to change prev to null so when we get to front it will be null
+        curr.next = prev;
+        prev.next = null;
+        
+        //this will always be last node when coming up stack
+        return front;
+        
+    }
+}
+
+//to get to this solution, identify the base way to reverse something. Then we need to keep track of our previous node before reversal, best way is recursion.
+    
+/*
+
+
+
+head = 1 p = 
+    head = 2 
+head = 1 p = 2
+1 -> <- 2
+null<-1<-2
+return 2
+*/
