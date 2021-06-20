@@ -1,0 +1,43 @@
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        String result = "";
+        
+        
+        if (strs.length == 1){
+            return strs[0];
+        }
+        
+        //for loop for each letter in firstword
+        for (int i = 0; i < strs[0].length(); i++ ){
+                        
+            //next = 1
+            int next = 1;
+            //while next word is not null
+            while (next < strs.length){
+                
+                //if i > strs[next].length() - 1
+                if (i > strs[next].length() - 1){
+                    //return our string
+                    return result;
+                }
+                //if strs[0].charAt(i) != strs[next].charAt(i)
+                if (strs[0].charAt(i) != strs[next].charAt(i)){
+                    
+                    //return our strin
+                    return result;
+                }
+
+                //next++;
+                next++;
+                
+            }   
+            result += strs[0].charAt(i);
+            
+        }
+        
+        return result;
+
+            
+            //append letter to our string
+    }
+}
