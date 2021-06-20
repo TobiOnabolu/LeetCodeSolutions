@@ -1,0 +1,126 @@
+class Solution {
+    public String[] reorderLogFiles(String[] logs) {
+        
+        //seperate digit string 
+        ArrayList<String> digitlogs = new ArrayList<String>();
+        ArrayList<String> stringlogs = new ArrayList<String>();
+        
+        //for each loop thru logs
+        for (String string : logs){
+            //String[] words = string.split(" ")
+            String[] word = string.split(" ");
+            //if second word is alpha append to digit logs
+            if (Character.isDigit(word[1].charAt(0))){
+                digitlogs.add(string);
+            }
+            //else
+            else{
+                //calls sort strings(string, stringlogs)
+                sortStrings(string, stringlogs);
+            }
+            
+        }
+
+            
+        //appned digit logs
+        stringlogs.addAll(digitlogs);
+        
+        
+        String[] array = new String[logs.length];
+        
+        stringlogs.toArray(array);
+        
+        //return stringlogs
+        return array;
+    }           
+    
+    //sort strings helper method 
+    private void sortStrings(String string, ArrayList<String> stringlogs){
+        //midpoint
+        //start
+        //end
+        if (stringlogs.size() == 0){
+            stringlogs.add(string);
+            return;
+        }
+        
+        boolean added = false;
+        int start = 0;
+        int end = stringlogs.size() - 1;
+        int mid = (start + end) / 2;
+        
+        
+        //Binary Search
+        while (!added){
+            int j = stringlogs.get(mid).indexOf(" ") + 1;
+            int i = string.indexOf(" ") + 1;
+            
+            String string1 = string.substring(i);
+            String string2 = stringlogs.get(mid).substring(j);
+            
+            if ((string1.compareTo(string2) > 0 && mid == stringlogs.size() - 1) || 
+                (string1.compareTo(string2) > 0 && string1.compareTo(stringlogs.get(mid+1).substring(stringlogs.get(mid + 1).indexOf(" ") + 1)) < 0)){
+                stringlogs.add(mid + 1, string);
+                added = true;
+            }
+            
+            else if ((string1.compareTo(string2) < 0 && mid == 0) || 
+                (string1.compareTo(string2) < 0 && string1.compareTo(stringlogs.get(mid-1).substring(stringlogs.get(mid - 1).indexOf(" ") + 1)) > 0)){
+                stringlogs.add(mid, string);
+                added = true;
+            }
+                     
+            else if(string1.compareTo(string2) > 0){
+                start = mid + 1;
+                //THERE IS AN INFINITE LOOP HERE WHEN THE MID POINT AND START ARE =
+                mid = (start + end)/2;
+            }
+            else if(string1.compareTo(string2) < 0){
+                end = mid - 1;
+                mid = (start + end)/2;
+            }
+            else{
+                if(string.compareTo(stringlogs.get(mid)) < 0){
+                    stringlogs.add(mid, string);
+                    added = true;
+                }
+                else{
+                    stringlogs.add(mid + 1, string);
+                    added = true;                  
+                }
+            }
+                     
+        }
+        
+        return;
+        
+        
+    }
+    
+    
+    /*
+     1 2 3 4 5 9 12
+    mid = startind +endind /2
+    
+    if > mid nd mid = logs.length -1 || > mid nd < mid +1 
+        add at mid + 1
+        added = true
+    
+    elif < mid nd mid == 0 || < mid nd > mid - 1
+        add at mid
+        added = true
+    
+    elif > mid
+        start = mid
+        mid = start + end/2 
+        
+    elif < mid
+        end = mid
+        mid = start + end/2
+    else they equal
+        check higher if identifiers
+        added = true
+        
+    
+    */
+}
