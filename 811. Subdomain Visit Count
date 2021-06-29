@@ -1,0 +1,47 @@
+class Solution {
+    public List<String> subdomainVisits(String[] cpdomains) {
+        ArrayList<String> res = new ArrayList<String>();
+        HashMap<String, String> map = new HashMap<String, String>();
+        
+        //iterate thru cp domains
+        for (int i = 0; i < cpdomains.length; i++){
+            
+            //split into 2 parts by space
+            String[] countvalue = cpdomains[i].split(" ", 2);
+            //store 2nd part as key in map and store 1st part as value
+            if (map.get(countvalue[1]) == null){
+                map.put(countvalue[1], countvalue[0]);            
+            }
+            else{
+                
+            }
+            //split second part by period and store it in array name periods
+            String[] periods = countvalue[1].split("\\.", 2);
+            //while periods[0] != "", cause this mean there was no more to split
+            while (periods.length > 1){                
+                //check if periods[1] exists in hash map
+                if (map.get(periods[1]) != null){
+                    //if it does update value with adding to hashmap
+                    Integer value = Integer.parseInt(map.get(periods[1])) + Integer.parseInt(countvalue[0]);
+                    
+                    map.put(periods[1], value.toString());                    
+                }
+                else{
+                    //add it to hashmap
+                    map.put(periods[1], countvalue[0]);                    
+                }
+                
+                periods = periods[1].split("\\.", 2);
+            
+            }
+        }
+        
+        //run thru hashmap adding key value pair to res
+        for (Map.Entry<String, String> pair : map.entrySet()){
+            res.add(pair.getValue() + " " + pair.getKey());
+        }
+        
+         return res;
+    } 
+       
+}
