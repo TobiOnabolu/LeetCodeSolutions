@@ -1,0 +1,63 @@
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        /*
+
+                
+        array to hold booleans
+        
+        if true put nums2 spot
+        if false put nums1 spot
+        
+        2 indexes for nums1 and nums 2
+        
+        traverse thru nums 1 & while thru nums 2
+                if j > n - 1
+                    put false and move on to next i
+                else if i > m - 1
+                    put true and move on to next j
+                    
+                else if nums2 < then nums1 put true in array
+                    move on to next num2
+                else
+                    put false in array and move on to next ele in nums1
+                            
+            
+        false false true  false true true
+        
+        
+        */
+        
+        
+        int[] decisions = new int[n + m];
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        int[] num1copy = nums1.clone();
+        
+        while (i < m || j < n){
+            if (j >= n){
+                decisions[k] = nums1[i];
+                i++;
+            }
+            else if (i >= m){
+                decisions[k] = nums2[j];
+                j++;
+            }
+            else if (nums2[j] < nums1[i]){
+                decisions[k] = nums2[j];
+                j++;
+            }
+            else{
+                decisions[k] = nums1[i];
+                i++;
+            }
+            k++;
+        }
+        
+        for (int x = 0; x < decisions.length; x++){
+            nums1[x] = decisions[x];
+        }
+    }
+}
+
+//there is a nice trick to reverse in place with 2 pointer see if u can remember/find it next time you look at the question
