@@ -1,0 +1,45 @@
+class Solution {
+    public int countBinarySubstrings(String s) {
+        //1 counts
+        //1 booleans
+        //1 count for number of strings
+        int substrings = 0;
+        boolean bprev = true;
+        boolean bcurr = false;
+        int prev = 0;
+        int curr = 0;
+        
+        //prev to hold number of prev occurences of a substring
+        //curr = current substring count
+        
+        for (int i= 0; i <= s.length() - 1; i++){
+            
+        //if prev++
+            if (bprev) prev++;
+            else curr++;        //else curr curr++
+
+        //if next dont match this
+            if (i == s.length() - 1 || s.charAt(i) != s.charAt(i+1)){
+                
+            //if prev switch to curr
+                if (bprev){
+                    bprev = false;
+                    bcurr = true;
+                }
+                //elseif curr take min and add it to substrings
+                //also make prev curr and curr 0
+                else{
+                    //set prev to false and curr to true
+                    substrings += Math.min(curr, prev);
+                    prev = curr;
+                    curr = 0;
+                    
+                                        
+                }
+            }
+
+        }
+            
+        return substrings;            
+    }
+}
