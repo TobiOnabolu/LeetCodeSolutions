@@ -1,0 +1,26 @@
+class Solution {
+    public List<String> fizzBuzz(int n) {
+        //if number mod 15 = 0 add fizzbuzz
+        //if number mod 5 = 0  add fizz
+        //if number mod 3 = 0 add buzz
+        //else add number
+        ArrayList<String> res = new ArrayList<String>();
+        
+        for (Integer i = 1; i < n + 1; i++){
+            if (i % 15 == 0){
+                res.add("FizzBuzz");
+            }
+            else if (i % 5 == 0){
+                res.add("Buzz");
+            }
+            else if (i % 3 == 0){
+                res.add("Fizz");
+            }
+            else{
+                res.add(i.toString());
+            }
+        }
+        
+        return res;
+    }
+}
