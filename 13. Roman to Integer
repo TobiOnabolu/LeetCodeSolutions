@@ -1,0 +1,29 @@
+class Solution {
+    public int romanToInt(String s) {
+        //for loop start at first element and stop at second last
+        //start at first element and add it to the sum before loop
+        //get next of from map and check if it is higher or lower than the curr symbol we have now
+        //if higher subtract it from sum
+        //if lower or  = to add it to sum
+        
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();        
+        
+        map.put('I', 1);
+        map.put('V', 5);
+        map.put('X', 10);
+        map.put('L', 50);
+        map.put('C', 100);
+        map.put('D', 500);
+        map.put('M', 1000);
+        
+
+        
+        int sum = map.get(s.charAt(s.length() - 1));
+        
+        for (int  i = s.length() - 1;  i > 0 ; i--){
+            if (map.get(s.charAt(i)) > map.get(s.charAt(i - 1))) sum -= map.get(s.charAt(i-1));
+            else sum += map.get(s.charAt(i-1));
+        }
+        return sum;
+    }
+}
