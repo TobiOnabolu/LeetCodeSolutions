@@ -1,0 +1,46 @@
+class Solution {
+    public void moveZeroes(int[] nums) {
+        /*
+        1 2 0 0 0 3 5 0 7
+            ^     ^ 
+        1 2 3 0 0 0 5 0 7
+              ^     ^
+        1 2 3 5 0 0 0 0 7
+                ^       ^
+        
+        first pointer to traverse thru array 
+        second pointer to find first non 0 character once first pointer finds a 0
+        
+        both start at -1
+        while this one end or the other ends
+        
+        //one while loop to travers until ptrint hits end o
+            //if pts int is not 0
+                //increment ptr int
+            //else it will be 0
+                initialize ptrzero to ptrint and start a new while till ptrint hits end or finds non zero integer
+                    ptrint++
+                if ptrint < length
+                    we do swap
+                    increment ptrint               
+                    
+                    
+        //update first zero everytime zero is spotted
+        // then for every integer check if it is behind first zero if it is then well do the swap and update first zero
+        */
+        
+        int ptrInt = 0;
+        int firstZero = -1;
+        while (ptrInt < nums.length){
+            if (nums[ptrInt] == 0 && (firstZero == -1 || ptrInt < firstZero)) firstZero = ptrInt;
+            else if (firstZero != -1 && nums[ptrInt] != 0 ){
+                nums[firstZero] = nums[ptrInt];
+                nums[ptrInt] = 0;
+                firstZero++;
+            }
+            ptrInt++;
+        }
+        
+        
+    }
+}
