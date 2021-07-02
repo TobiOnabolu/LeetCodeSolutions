@@ -1,0 +1,30 @@
+class Solution {
+    public boolean isPalindrome(String s) {
+        char[] sc = s.toLowerCase().toCharArray();
+        int p1 = 0;
+        int p2 = sc.length - 1;
+        
+        
+        while (p1 < p2){
+            if (!Character.isLetterOrDigit(sc[p1]) && !Character.isLetterOrDigit(sc[p2])){
+                p1++;
+                p2--;
+            }
+            else if (!Character.isLetterOrDigit(sc[p1])){
+                p1++;
+            }
+            else if (!Character.isLetterOrDigit(sc[p2])){
+                p2--;
+            }
+            else{
+                if (sc[p1] != sc[p2]) return false;
+                p1++;
+                p2--;
+            }
+        }
+        
+        
+        return true;
+        
+    }
+}
