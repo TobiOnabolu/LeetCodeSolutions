@@ -1,0 +1,76 @@
+class Solution {
+    public String addBinary(String a, String b) {
+        
+        /*1 1 1
+          1 1 1 1 
+        1 1 1 1 1 
+          
+          1 1 1 0
+        
+        
+        */
+        
+        HashMap<String, String> map = new HashMap<String, String>();
+        
+        //carry plus one of them
+        //if length == 2 get carry again and change that sum to appropriate
+        //else make carry 0
+        // that sum plus the other and get carry again if length = 2 from that
+        //add carry at the end
+            
+        StringBuilder string = new StringBuilder();
+        int i =  a.length() - 1;
+        int j = b.length() - 1;
+        String carry = "0";
+        String ac = "";
+        String bc = "";
+        
+        map.put("11", "10");
+        map.put("10", "1");
+        map.put("01", "1");
+        map.put("00", "0");
+        
+        
+        while (i > -1 || j > -1){
+            if (i < 0) {
+                ac = "0";
+                bc = b.charAt(j) + ""; 
+            }
+            else if (j < 0){ 
+                ac = a.charAt(i) + "";
+                bc = "0";
+            }
+            else{
+                ac = a.charAt(i) + "";
+                bc = b.charAt(j) + ""; 
+            }
+            
+            
+            
+            
+            String sum = ac + carry;
+            if (sum.equals("11")){
+                carry = "1";
+                sum = "0";
+            }
+            else {
+                carry = "0";
+                sum = map.get(sum);
+            }
+            sum = sum + bc;
+            if (sum.equals("11")){
+                carry = "1";
+                sum = "0";
+                string.insert(0, sum);
+            }
+            else string.insert(0, map.get(sum));
+            i--;
+            j--;
+            
+        }
+        
+        if (carry == "1") string.insert(0, carry);
+        
+        return string.toString();
+    }
+}
