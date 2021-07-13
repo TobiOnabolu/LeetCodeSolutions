@@ -1,0 +1,29 @@
+class Solution {
+ 
+
+    public int climbStairs(int n) {
+        int[] calc = new int[n+1];
+        calc[0] = 1;
+        calc[1] = 1;
+        
+        
+        for (int i = 2;  i < n+1; i++){
+            calc[i] = calc[i-1] + calc[i-2];
+        }
+        
+        
+        return calc[n];
+        
+
+    }
+
+    
+    
+    //recursive solution is n-1 + n-2 a fib recursion
+    //make an array to hold calcs for n + 1
+    //calc[0] with 1 and calc[1] with 1
+    //then start at calc 2 and fill with calc 2-1 and 2-2
+    
+    
+
+}
