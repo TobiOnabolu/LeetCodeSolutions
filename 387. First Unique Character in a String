@@ -1,0 +1,24 @@
+class Solution {
+    public int firstUniqChar(String s) {
+        int[] letters = new int[26];
+        for (int i = 0; i < letters.length; i++){
+            letters[i] = -2;
+        }
+        
+        
+        
+        for (int c = 0; c < s.length(); c++){
+            if (letters[s.charAt(c) - 97] == -2) letters[s.charAt(c) - 97] = c;
+            else if (letters[s.charAt(c) - 97] >= 0) letters[s.charAt(c) - 97] = -1;
+        }
+        
+        int min = 0;
+        
+        for (int i = 0; i < letters.length; i++){
+            if (letters[min] < 0) min = i;
+            if (letters[i] >= 0 && letters[i] < letters[min]) min = i;
+        }
+        
+        return  letters[min] < 0 ? -1 : letters[min];
+    }
+}
