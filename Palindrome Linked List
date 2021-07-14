@@ -1,0 +1,78 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        //slow fast pointer, slow will be at middle for odd list and middle + 1 for even
+        //keep track of size with adding + 2 for each iteration 
+        //reverse list from head doing it until size = 0
+        //then run loop to check at the end to see if they =
+        
+        
+        /*
+          1 -> 2 -> 3 -> 4 -> 5
+                         S
+          1 -> 2 -> 3 -> 4 -> 5
+ 
+           2-> 1 -> X
+           H
+ 
+       */
+        
+        
+        ListNode slow = head;
+        ListNode fast = head;
+        int halfsize = 0;
+        
+        if (fast.next == null) return true;
+        
+        while (fast != null  && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            halfsize++;
+        }
+        
+        //that means odd
+        if (fast != null) slow = slow.next;
+        
+        
+        head = reverseList(head, halfsize);
+
+        while (head != null){
+            if (head.val != slow.val) return false;
+            head = head.next;
+            slow = slow.next;
+        }
+        
+        return true;
+        
+        
+    }
+     
+
+        
+    
+    private ListNode reverseList(ListNode head, int size){
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode temp = null;
+        while (size > 0){
+            temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+            size -=1;
+        }
+        
+        return prev;
+        
+        
+    }
+}
