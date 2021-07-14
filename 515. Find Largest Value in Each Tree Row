@@ -1,0 +1,74 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+/*
+                               3
+                             /   \
+                            1     5
+                           / \   / \
+                          0  2  4   6
+                        / \ / \ / \ / \
+                      x   x x 3 x  xx  x
+ 
+
+*/
+
+
+class Solution {
+    private HashMap <Integer, Integer> map = new HashMap<Integer, Integer>();
+    
+    public List<Integer> largestValues(TreeNode root) {
+        //map contain levels with with level 1 being bottom
+        //recurse down tree, when get to bottom return 1
+        //that will be key if nothing there for level 1 put value if something do math.max of value
+        //return level + 1
+        
+        if (root == null) return new ArrayList<Integer>();
+        
+        getLargest(root, 0);
+        
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        
+        for (Integer key : map.keySet()){
+            list.add(map.get(key));
+        }
+        
+        return list;
+        
+        
+        
+    }
+    
+    
+    private void getLargest(TreeNode root, int level){
+        if (root == null) return;
+        else{
+            
+            if (!(map.containsKey(level))) map.put(level, root.val);
+            else{
+                int value = Math.max(map.get(level), root.val);
+                map.put(level, value);
+            }
+            
+            getLargest(root.left, level + 1);
+            getLargest(root.right, level + 1);
+            
+            return ;
+        }
+        
+        
+    }
+}
