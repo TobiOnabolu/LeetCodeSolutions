@@ -1,0 +1,74 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        //foundNode = root
+        //bool found
+        //found  = findNode(foundNode, subRoot)
+        //if found 
+            //return isIdentical(foundNode, subRoot)
+        //return false
+        TreeNode curr = null;
+        ArrayList<TreeNode> nodes = new ArrayList<>();
+        
+        if (subRoot == null && root == null) return true;
+        if (root == null || subRoot == null) return false;
+        
+        
+        root = findNode(root, nodes, subRoot);
+        for (int i = 0; i < nodes.size(); i++){
+            
+            if (isIdentical(nodes.get(i), subRoot) == true) return true;
+        }
+        
+        
+        return false;
+        
+    }
+    
+    
+    private TreeNode findNode(TreeNode foundNode, ArrayList<TreeNode> nodes, TreeNode subRoot){
+        //if foundNode is nuill && subroot is null return true
+        //if subroot is null return false
+        //if root is null is return false
+        //if root.val == foudn.val return true
+        //node =  findnode(foundNode.left, subroot)
+        //if node != null & node == val return node
+        //else findnorde rigt
+        //return node
+        if (foundNode == null) return null;
+        foundNode.left = findNode(foundNode.left, nodes, subRoot);
+        foundNode.right = findNode(foundNode.right, nodes, subRoot);
+        if (foundNode.val == subRoot.val){
+            nodes.add(foundNode);
+        }
+        
+        return foundNode;
+            
+        
+        
+    }
+    
+    private boolean isIdentical(TreeNode p1, TreeNode p2){
+        if (p1 == null && p2 == null) return true;
+        if(p2 == null || p1 == null) return false;
+        if(p1.val != p2.val) return false;
+        return isIdentical(p1.left, p2.left) && isIdentical(p1.right, p2.right);
+        
+        
+    }
+
+}
