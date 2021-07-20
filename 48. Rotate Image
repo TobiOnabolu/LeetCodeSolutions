@@ -1,0 +1,78 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        //keep track of layers by dividing by 2
+        //going to need to need to do it the number of rows - 1
+        //temp = top left
+        //top left = bottom left
+        //bottom left = bottom right 
+        //bottom right = top right
+        //top right = temp;
+        
+        //temp/topleft moves +1 down
+        //bottom left move + 1 right
+        //bottom right moves + 1 up
+        //top right moves plus 1 left
+        
+        /*
+        //start and end to keep track of layer
+        temp = 00  ji
+        00 = 30   ji kj
+        30 = 33  kj lk
+        33 = 03 lk il
+        03 = temp il
+        
+        j++
+        l--
+        
+        temp = 10
+        10 = 31
+        31 = 23
+        23 = 02
+        02 = temp
+        
+        j++
+        l--
+        
+        temp = 20
+        20 = 32
+        32 = 13
+        13 = 01
+        
+        start = i
+        end = k  these stay the same
+        j = start and increment each ite
+        l = end and decrement each ite
+        
+        
+        start  + 1
+        end - 1
+        */
+        //i = j
+        //j = l
+    
+        
+        int length = matrix.length;
+        int end = length - 1;
+        
+        for (int start = 0; start < length / 2;start++){
+            int j = end;
+            for (int i = start; i < end; i++){
+                
+                int temp = matrix[i][start];
+                matrix[i][start] = matrix[end][i];
+                matrix[end][i] = matrix[j][end];
+                matrix[j][end] = matrix[start][j];
+                matrix[start][j] = temp;
+    
+                j--;
+            }
+            
+            
+            end -= 1;
+        }
+        
+        
+        
+        
+    }
+}
