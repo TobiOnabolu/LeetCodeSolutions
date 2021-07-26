@@ -1,0 +1,33 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        //have low and high start at same spot
+        int low = prices[0];
+        int high = prices[0];
+        int subtotal = 0;
+        int total = 0;
+        
+        //if num[i] less than low || high make that new low and new high. we are startin again
+            //add subtotal to total
+            //make subtotal 0
+        //else if nums[i] is higher than high
+            //make that high and calc subtotal
+        
+        for (int num : prices){
+            if (num < low || num < high){
+                high = num;
+                low = num;
+                total += subtotal;
+                subtotal = 0;
+            }
+            
+            else if(num > high){
+                high = num;
+                subtotal = high - low;
+            }
+        }
+        
+        
+        //at end calc subtotal add to total and return
+        return total + (high -low);
+    }
+}
