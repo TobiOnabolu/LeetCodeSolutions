@@ -1,0 +1,32 @@
+class Solution {
+    public int pivotIndex(int[] nums) {
+        //run through array to get total first
+        //store that in right total
+        //start left total at 0
+        
+        int leftTotal = 0;
+        int rightTotal = 0;
+        
+        for (int i : nums){
+            rightTotal += i;
+        }
+        
+        
+        
+        //iterate thru
+            //if i -1 is not less than 0 than add i-1 to left otal
+            //subtract this spot from right total
+            //if left total = right total then return i
+        
+        for (int i = 0; i < nums.length; i++){
+            if (i != 0) leftTotal += nums[i-1];
+            rightTotal -= nums[i];
+            if (leftTotal == rightTotal) return i;
+        }
+        
+        
+        //if nothing return -1
+        
+        return -1;
+    }
+}
