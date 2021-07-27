@@ -1,0 +1,195 @@
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+
+//on put and get should update recently used
+//each key should have a accesed value and it should be assigned
+//linked list should be used so that when new node become head, shifting is o(1)
+//put should prepend
+    
+//get should remove node and prepend
+//recently used should be head
+
+//hashmap key= key, value = node holding value, accessed
+
+//lru attribute to keep track of what need to go first
+//mru to assign what comes after this node
+
+// each node will contain key of one used after it and used b4 it 
+    //we need before incase a key get updated with get so we can chagne the one prev to its next
+
+
+//Algo
+//LRU Cache
+    //HashMap <Integer, Node>
+    //lru
+    //mru
+    //size 
+    //capacity
+
+//constructor
+    //lru = -1, mru  = -1, size = 0, capacity =capacity
+
+//put
+    //if size == 0 //size will keep growing or stay same but never be 0 again
+        //lru = key, mru = key
+        //size++
+        //create node for key add it to hashmap and return
+
+
+    // if map does not contain key can add regularly
+        //set mrus node used after to key
+        //creat node for key(add to map) and set it usedb4 to mru
+        //set mru to key
+        
+            
+        //if size >= capacity (because of our algo size will keep growing)
+            //store lru in temp
+            //make lru lru usedAfter variable
+            //now make the lru usedBefore variable -1;
+            //remove temp from map        
+    
+        //size + 1
+    
+
+    //else map does contain key have to move this element to mru now
+        //if used after is -1 put in new value and return //this takes care of single ele and last element
+        //else if usedbefore is -1 
+            //make lru lrus usedAfter
+            //now make lru used before -1
+            //now make the key which we haves usedbefore mru and make its used after -1
+            //make mru usedafter our key
+            //make our key mru
+        //else middle element
+            //make usebefore elements usedafter point to this elements used after
+            //make this elements used after used before to this elements used before
+            //make mru used after point to this element 
+            //make this element usedb4 mru and its usedafter -1 and update its value
+
+
+
+
+//get
+    //if map doesnt contain return -1
+    //do same thing in put if key exists but instead of updating value return its value
+    
+
+
+//Node
+
+    //value
+    //usedBefore
+    //usedAfter
+
+class LRUCache {
+    public int capacity;
+    public int size;
+    public int mru;
+    public int lru;
+    public HashMap<Integer, Node> map = new HashMap<>();
+    
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        size = 0;
+        mru = -1;
+        lru = -1;
+    }
+    
+    public int get(int key) {
+        if (!map.containsKey(key))return -1;
+        if (map.get(key).usedAfter == -1){
+            mru = key;
+        }
+        else if (map.get(key).usedBefore == -1){
+            lru = map.get(lru).usedAfter;
+            map.get(lru).usedBefore = -1;
+            map.get(key).usedBefore = mru;
+            map.get(key).usedAfter = -1;
+            map.get(mru).usedAfter = key;
+            mru = key; 
+        }
+        else{
+            map.get(map.get(key).usedBefore).usedAfter = map.get(key).usedAfter;
+            map.get(map.get(key).usedAfter).usedBefore = map.get(key).usedBefore;
+            map.get(mru).usedAfter = key;
+            map.get(key).usedBefore = mru;
+            map.get(key).usedAfter = -1;
+            mru = key;
+        }
+        
+        return map.get(mru).value;
+    }
+    
+    public void put(int key, int value) {
+        if (size == 0){
+            mru = key;
+            lru = key;
+            map.put(key, new Node(value));
+            size++;
+            return;
+        }
+        
+        //add it to map
+        if (!map.containsKey(key)) {
+            map.get(mru).usedAfter = key;
+            map.put(key, new Node(value));
+            map.get(key).usedBefore = mru;
+            mru = key;
+            
+            //past max now keep eject lru
+            if (size >= capacity){
+                int temp = lru;
+                lru = map.get(lru).usedAfter;
+                map.get(lru).usedBefore = -1;
+                map.remove(temp);
+            }
+            size++;
+        }
+        
+        //already in there
+        else{
+            if (map.get(key).usedAfter == -1){
+                map.get(key).value = value;
+            }
+            else if (map.get(key).usedBefore == -1){
+                lru = map.get(lru).usedAfter;
+                map.get(lru).usedBefore = -1;
+                map.get(key).usedBefore = mru;
+                map.get(key).usedAfter = -1;
+                map.get(mru).usedAfter = key;
+                mru = key;
+                map.get(key).value = value;
+            }
+            else{
+                map.get(map.get(key).usedBefore).usedAfter = map.get(key).usedAfter;
+                map.get(map.get(key).usedAfter).usedBefore = map.get(key).usedBefore;
+                map.get(mru).usedAfter = key;
+                map.get(key).usedBefore = mru;
+                map.get(key).usedAfter = -1;
+                mru = key;
+                map.get(key).value = value;
+            }
+            
+        }
+        
+    }
+}
+
+
+
+
+class Node {
+    public int value;
+    public int usedBefore;
+    public int usedAfter;
+    
+    public Node(int value){
+        this.value = value;
+        usedBefore = -1;
+        usedAfter = -1;
+    }
+    
+}
