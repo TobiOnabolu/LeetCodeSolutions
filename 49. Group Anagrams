@@ -1,0 +1,58 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        //have array same size as strs.
+        //when accessed change array spot to done
+        
+        //if spot not done
+        //add it to new list
+        //then do is anagram on it with all other not done strs
+            //if is anagram add it to the list as well
+        //add the the list to the main one at the end of 2nd for loop
+        
+        
+        List<List<String>> groups = new ArrayList<>();
+        boolean[] processed = new boolean[strs.length];
+        
+        for (int i = 0; i < strs.length; i++){
+            List<String> anagrams = new ArrayList<>();
+            if (!processed[i]){
+                anagrams.add(strs[i]);
+                processed[i] = true;
+                for (int j = i + 1; j < strs.length; j++){
+                    if (!processed[j] && isAnagram(strs[i], strs[j])){
+                        anagrams.add(strs[j]);
+                        processed[j] = true;
+                    } 
+                    
+                    
+                }
+                
+                groups.add(anagrams);
+            }
+
+            
+        }
+        
+        return groups;
+        
+    }
+    
+    
+    private boolean isAnagram(String word1, String word2){
+        if (word1.length() != word2.length()) return false;
+        int[] alpha = new int[26];
+        
+        
+        for (int i = 0; i < word1.length(); i++){
+            alpha[word1.charAt(i) - 'a'] += 1;
+            alpha[word2.charAt(i) - 'a'] -= 1;
+        }
+        
+        for (int i = 0; i < 26; i++){
+            if (alpha[i] != 0) return false;
+        }
+        
+        return true;
+        
+    }
+}
