@@ -1,0 +1,99 @@
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        //start with outer layer
+        //work way in
+        
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+/*
+have left off var will make sense once coding and start it at 0
+
+
+   [0,0] -> [0,1] -> [0,2] -> [1, 2] -> [2, 2] -> [2, 1] -> [2, 0] -> [1, 0]
+*/
+  
+   //top = 0,  left = 0 , right = matrix[0] length - 1, bottom = length -1
+   //once we complete top row top is +1, once we complete right col right is  -1 etc
+   //we stop once top > bottom  or right < left(incase matrix is long vertically)
+
+        int leftoff = 0;
+        int top = 0;
+        int left = 0;
+        int right = matrix[0].length -1;
+        int bottom = matrix.length-1;
+        List<Integer> res = new ArrayList<>();
+        
+    //while top is <= bottom && right >= left
+        while (top <= bottom && right >= left){
+            
+        
+    //first while go to leftoff < right  so it only hit elements before the right column
+        //use [top][i]
+        
+        //once done make leftoff top
+        //once done that increase top
+        
+            for (int i = leftoff; i <= right; i++) {
+                if (matrix[top][i] != 101) {
+                    res.add(matrix[top][i]);
+                    matrix[top][i] = 101;
+                }
+            }
+            leftoff = top;
+            top++;
+        
+    //second while go to leftoff < bottom  so it only hits ele before the bottom row
+        //use [j][right]
+        
+        //once done make leftoff right
+        //decrese right when done
+            for (int i = leftoff; i <= bottom; i++) {
+                if (matrix[i][right] != 101){
+                    res.add(matrix[i][right]);
+                    matrix[i][right] = 101;     
+                }
+            }
+            leftoff = right;
+            right--;
+        
+        
+    //third while go to leftoff > left
+        //use [bottom][leftoff]
+        
+        //once done make leftoff bottom
+        //decrease bottom
+            for (int i = leftoff; i >= left; i--){
+                if (matrix[bottom][i] != 101){
+                    res.add(matrix[bottom][i]);
+                    matrix[bottom][i] = 101;
+                }
+            } 
+            leftoff = bottom;
+            bottom--;
+        
+        
+    //fourth while go to left off  > top
+        //use [leftoff][left]
+        
+        //once done make leftoff left
+        //increase left
+            for (int i = leftoff; i >= top; i--){
+                if ((matrix[i][left]) != 101){
+                    res.add(matrix[i][left]);
+                    matrix[i][left] = 101;
+                }
+            } 
+            leftoff = left;
+            left++;
+        }
+//lo 0
+//t 0 
+//r 2
+//b 2
+//l 0
+  
+        
+        return res; 
+    }
+}
