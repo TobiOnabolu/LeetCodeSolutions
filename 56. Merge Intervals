@@ -1,0 +1,57 @@
+class Solution {
+    public int[][] merge(int[][] intervals) {
+
+        List<int[]> res = new ArrayList<>();
+        int ptr = 1;
+        
+        
+            //we know to first sort this list by the first element so we can just worry about the comparing the end to the start.
+        //arrays.sort(intervals, (a,b) -> )
+        //sort array
+        Arrays.sort(intervals, new Comparator<int[]>(){ //this is how you change the comparator
+            public int compare(int[] a, int[] b){
+                return Integer.compare(a[0], b[0]);
+            }
+        });
+
+        int highest = intervals[0][1];
+        int[] item = new int[]{intervals[0][0], intervals[0][1]}; 
+        res.add(item);
+        
+        //have pointer and run while pointer does not = length of intervals, do this so we can change where pointer is when we merge 2 intervals
+        //have a highest var so we can keep track if its in the range and needs to be added
+        
+        //while ptr < length
+        
+        while (ptr < intervals.length){
+            //if ptr + 1 == length then add this element to the list since no one merged it
+            //if highest == -1 ||  ptr + 1 at [0] > highest
+                //then we add this element to the list does not need to be merged, update highest
+            if (intervals[ptr][0] > highest){
+                item = new int[]{intervals[ptr][0], intervals[ptr][1]};
+                res.add(item);
+                highest = item[1];
+            }
+            
+            //top 2 ifs can be together
+            //else we can merge
+                //math.max of highest and the element we are at at[1],  do this because we dont know which one will be higher
+                //the element we are at, at [1] will be updated by highest
+                //ptr++ cause we can skip this elemnet in intervals since we merged it
+            else{
+                highest = Math.max(intervals[ptr][1], highest);
+                item[1] = highest; //assuming this will update in the arraylist cause we havent used new
+
+            }
+            
+            
+            ptr++;
+            //pointer ++ to go to next element
+        }
+        
+        //return the arraylist.toarray
+        return res.toArray(new int[][]{});
+        
+    }
+    
+}
