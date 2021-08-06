@@ -1,0 +1,64 @@
+class Solution {
+    
+    HashSet<String> used = new HashSet<>();
+    public boolean exist(char[][] board, String word) {
+        boolean res = false;
+        
+        for (int i = 0; i < board.length; i++){
+            for (int j = 0; j < board[0].length; j++){
+                if (board[i][j] == word.charAt(0)){
+                    if (dfs(i, j, 0, board, word)) return true;
+                    else  used.clear(); //reset the found 
+                }
+            }    
+        }
+        
+        return false;
+
+    }
+    
+    
+    private boolean dfs(int x, int y, int pos, char[][] board, String word){
+        //x y pos word board
+        //if x < 0 || board.length return false
+        //if y < 0 || >board[0].length return false
+        
+        if (x < 0 || x >= board.length) return false;
+        if(y < 0 || y >= board[0].length) return false;
+        
+        //if used.get(x) == y return false //cause we found this already
+        if (used.contains(String.valueOf(x) + String.valueOf(y))) return false;
+        
+        //if board[x][y] == word[pos]
+            //pos + 1
+            //used.put(new int[]{x,y});
+            //if pos == word length return true cause we found the word
+            //else 
+            //recurse l r t b to find next char
+            //return dfs(x -1, y, pos, board, word) || dfs right dfs down dfs up
+        if (board[x][y] == word.charAt(pos)){
+            pos++;
+            used.add(String.valueOf(x) + String.valueOf(y));
+            if (pos == word.length()) return true;
+            boolean bool = dfs(x-1, y, pos, board, word) || dfs(x, y +1, pos, board, word) || dfs(x+1, y, pos, board, word) || dfs(x, y-1, pos, board, word); 
+            if (bool == false){//didnt find any match after this match so clear this path  //this is the backtracking YOU WILL NEED
+                used.remove(String.valueOf(x) + String.valueOf(y));
+            }
+            return bool;
+        
+        }
+        
+        return false;
+        
+        //return false we didnt find a match
+    }
+}
+
+
+/*
+[["A","B","C","E"],
+ ["S","F","E","S"],
+ ["A","D","E","K"]]
+ 
+"ABCESE"
+*/
